@@ -28,18 +28,18 @@ export function Navbar() {
         
         {/* Left Side: Logo — compact circular emblem + wordmark */}
         <div className="flex items-center">
-          <Link href="/" aria-label="Sacred Roots — home" className="flex items-center gap-1.5 transition-opacity hover:opacity-90">
-            <span className="relative h-12 w-12 sm:h-13 sm:w-13 shrink-0 overflow-hidden rounded-full bg-[#FBF8F2] ring-1 ring-black/10 shadow-sm">
+          <Link href="/" aria-label="Sacred Roots — home" className="flex items-center gap-2 transition-opacity hover:opacity-90">
+            <span className="relative h-9 w-9 sm:h-10 sm:w-10 shrink-0 overflow-hidden rounded-full bg-[#FBF8F2] ring-1 ring-black/10 shadow-sm">
               <Image
                 src="/chirag.png"
                 alt="Sacred Roots"
                 fill
-                sizes="52px"
-                preload
-                className="object-contain p-0.36"
+                sizes="40px"
+                priority
+                className="object-contain p-0.1"
               />
             </span>
-            <span className={`font-heading text-2xl sm:text-2xl font-medium ${isHome ? 'text-white' : 'text-primary'}`}>Sacred Roots</span>
+            <span className={`font-heading text-xl sm:text-[22px] font-medium ${isHome ? 'text-white' : 'text-primary'}`}>Sacred Roots</span>
           </Link>
         </div>
 

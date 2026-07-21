@@ -5,16 +5,12 @@ import { temples } from "@/lib/data/temples";
 import { TempleCard } from "@/components/TempleCard";
 import { HeroContent } from "@/components/hero/HeroContent";
 import { HeroStats } from "@/components/hero/HeroStats";
+import { CategorySection } from "@/components/home/CategorySection";
+import { ExploreIndiaSection } from "@/components/home/ExploreIndiaSection";
 
 export default function Home() {
-  const featuredTemples = temples.slice(0, 6);
-  
-  const categories = [
-    { name: "Jyotirlinga", count: 12, image: "https://images.unsplash.com/photo-1582510003544-4d00b7f74220?q=80&w=2000&auto=format&fit=crop" },
-    { name: "Divya Desam", count: 108, image: "https://images.unsplash.com/photo-1582510003544-4d00b7f74220?q=80&w=2000&auto=format&fit=crop" },
-    { name: "Shakti Peeth", count: 51, image: "https://images.unsplash.com/photo-1582510003544-4d00b7f74220?q=80&w=2000&auto=format&fit=crop" },
-    { name: "Char Dham", count: 4, image: "https://images.unsplash.com/photo-1582510003544-4d00b7f74220?q=80&w=2000&auto=format&fit=crop" }
-  ];
+  const featuredTemples = temples.slice(0, 3);
+
 
   return (
     <div className="flex flex-col w-full">
@@ -44,7 +40,7 @@ export default function Home() {
       </section>
 
       {/* Featured Temples Section */}
-      <section className="py-24 bg-background w-full">
+      <section className="pt-24 pb-12 md:pb-16 bg-background w-full">
         <div className="mx-auto w-full max-w-[1400px] px-5 sm:px-8 md:px-12">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
             <div>
@@ -66,36 +62,9 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Browse by Category Section */}
-      <section className="py-24 bg-secondary w-full border-y border-border">
-        <div className="mx-auto w-full max-w-[1400px] px-5 sm:px-8 md:px-12">
-          <div className="text-center mb-16">
-            <h2 className="font-heading text-4xl md:text-5xl font-bold text-foreground">Sacred Paths</h2>
-            <p className="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto">
-              Discover temples by their spiritual significance and ancient classifications.
-            </p>
-          </div>
-          
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {categories.map((category) => (
-              <Link href={`/temples?category=${category.name}`} key={category.name} className="group block relative h-80 rounded-2xl overflow-hidden shadow-md">
-                <Image
-                  src={category.image}
-                  alt={category.name}
-                  fill
-                  className="object-cover transition-transform duration-700 group-hover:scale-105"
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent"></div>
-                <div className="absolute bottom-0 left-0 p-6">
-                  <h3 className="font-heading text-2xl font-bold text-white mb-1">{category.name}</h3>
-                  <p className="text-white/80 text-sm font-medium">{category.count} Destinations</p>
-                </div>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
+      <CategorySection />
+
+      <ExploreIndiaSection />
 
       {/* Inspiration Section */}
       <section className="py-32 bg-background w-full relative overflow-hidden">
