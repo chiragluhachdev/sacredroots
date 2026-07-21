@@ -1,9 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, MapPin } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { temples } from "@/lib/data/temples";
 import { TempleCard } from "@/components/TempleCard";
-import { HeroSearch } from "@/components/HeroSearch";
+import { HeroContent } from "@/components/hero/HeroContent";
+import { HeroStats } from "@/components/hero/HeroStats";
 
 export default function Home() {
   const featuredTemples = temples.slice(0, 6);
@@ -18,36 +19,33 @@ export default function Home() {
   return (
     <div className="flex flex-col w-full">
       {/* Hero Section */}
-      <section className="relative w-full min-h-[90vh] flex items-center justify-center overflow-hidden bg-primary/10">
+      <section className="relative w-full min-h-[100svh] flex flex-col overflow-hidden">
         <div className="absolute inset-0 z-0">
-          <Image 
-            src="https://images.unsplash.com/photo-1582510003544-4d00b7f74220?q=80&w=2000&auto=format&fit=crop" 
-            alt="Majestic Indian Temple" 
-            fill 
-            className="object-cover opacity-90 object-top"
-            priority
+          <Image
+            src="/thebgimg.png"
+            alt="Majestic Indian temple gopuram glowing at sunset"
+            fill
+            className="object-cover object-[87.4%_15%] sm:object-[72%_1%] animate-kenburns"
+            sizes="100vw"
+            preload
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-background/40 via-background/60 to-background"></div>
+          {/* Gradients to ensure text readability on the left and bottom */}
+          <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/45 to-transparent"></div>
+          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-black/30"></div>
         </div>
-        
-        <div className="container relative z-10 flex flex-col items-center justify-center px-4 pt-20 text-center mx-auto">
-          <span className="inline-block py-1 px-3 rounded-full bg-primary/10 text-primary border border-primary/20 text-sm font-medium mb-6 backdrop-blur-sm">
-            Discover India's Spiritual Heritage
-          </span>
-          <h1 className="font-heading text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight text-foreground max-w-5xl leading-tight">
-            Journey to the <br/><span className="text-primary italic">Sacred Roots</span>
-          </h1>
-          <p className="mt-6 text-lg md:text-xl text-muted-foreground max-w-2xl font-light leading-relaxed">
-            Explore the most profound, ancient, and majestic temples across the Indian subcontinent. A digital encyclopedia of timeless devotion.
-          </p>
-          
-          <HeroSearch />
+
+        {/* Content — vertically centred, grows to fill available space */}
+        <div className="relative z-10 flex-1 flex items-center">
+          <HeroContent />
         </div>
+
+        {/* Stats Bar — sits in the normal flow at the bottom of the hero */}
+        <HeroStats />
       </section>
 
       {/* Featured Temples Section */}
       <section className="py-24 bg-background w-full">
-        <div className="container mx-auto px-4 md:px-8">
+        <div className="mx-auto w-full max-w-[1400px] px-5 sm:px-8 md:px-12">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
             <div>
               <h2 className="font-heading text-4xl md:text-5xl font-bold text-foreground">Featured Temples</h2>
@@ -70,7 +68,7 @@ export default function Home() {
 
       {/* Browse by Category Section */}
       <section className="py-24 bg-secondary w-full border-y border-border">
-        <div className="container mx-auto px-4 md:px-8">
+        <div className="mx-auto w-full max-w-[1400px] px-5 sm:px-8 md:px-12">
           <div className="text-center mb-16">
             <h2 className="font-heading text-4xl md:text-5xl font-bold text-foreground">Sacred Paths</h2>
             <p className="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto">
@@ -101,7 +99,7 @@ export default function Home() {
 
       {/* Inspiration Section */}
       <section className="py-32 bg-background w-full relative overflow-hidden">
-        <div className="container mx-auto px-4 md:px-8 relative z-10 flex flex-col items-center text-center">
+        <div className="mx-auto w-full max-w-[1400px] px-5 sm:px-8 md:px-12 relative z-10 flex flex-col items-center text-center">
           <h2 className="font-heading text-4xl md:text-5xl font-bold text-foreground max-w-3xl leading-tight">
             "A temple is not merely a structure of stone, but a living embodiment of the divine."
           </h2>

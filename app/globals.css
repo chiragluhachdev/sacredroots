@@ -93,6 +93,22 @@
   --sidebar-ring: #0B4D3B;
 }
 
+/* Slow cinematic zoom for hero background */
+@keyframes kenburns {
+  0% { transform: scale(1.01); }
+  100% { transform: scale(1.12); }
+}
+
+.animate-kenburns {
+  animation: kenburns 10s ease-in-out infinite alternate;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-kenburns {
+    animation: none;
+  }
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;

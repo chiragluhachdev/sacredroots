@@ -18,13 +18,13 @@ export function HeroSearch() {
   };
 
   return (
-    <form onSubmit={handleSearch} className="mt-8 md:mt-12 w-full max-w-2xl relative shadow-2xl rounded-full">
-      <div className="absolute inset-y-0 left-0 pl-4 md:pl-6 flex items-center pointer-events-none">
-        <Search className="h-5 w-5 md:h-6 md:w-6 text-muted-foreground" />
+    <form onSubmit={handleSearch} className="mt-8 md:mt-10 w-full max-w-2xl relative shadow-2xl rounded-full">
+      <div className="absolute inset-y-0 left-0 pl-4 sm:pl-5 flex items-center pointer-events-none">
+        <Search className="h-4 w-4 sm:h-[18px] sm:w-[18px] text-gray-600" />
       </div>
-      <input 
+      <input
         id="hero-search"
-        type="text" 
+        type="text"
         value={query}
         onChange={(e) => setQuery(e.target.value)}
         onFocus={(e) => {
@@ -33,10 +33,10 @@ export function HeroSearch() {
             e.target.scrollIntoView({ behavior: "smooth", block: "center" });
           }, 300);
         }}
-        className="block w-full pl-12 md:pl-16 pr-8 py-3.5 md:py-6 text-base md:text-lg rounded-full border border-border bg-background focus:ring-2 focus:ring-primary focus:border-primary transition-all outline-none scroll-mt-32" 
-        placeholder="Search temples..."
+        className="block w-full pl-10 sm:pl-12 pr-8 py-3 sm:py-3.5 text-sm sm:text-[15px] rounded-full border border-transparent bg-[#EBE9E0] text-gray-900 focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none scroll-mt-32 placeholder:text-gray-500 shadow-inner"
+        placeholder="Search by temple, deity, city, or state..."
       />
-      <button type="submit" className="absolute inset-y-1.5 md:inset-y-2 right-1.5 md:right-2 px-5 md:px-8 bg-primary hover:bg-primary/90 text-primary-foreground text-sm md:text-base font-medium rounded-full transition-colors flex items-center justify-center">
+      <button type="submit" className="absolute inset-y-1.5 right-1.5 px-3.5 sm:px-8 bg-[#0B4D3B] hover:bg-[#0B4D3B]/90 text-white text-xs sm:text-sm font-medium rounded-full transition-colors flex items-center justify-center">
         Search
       </button>
     </form>
