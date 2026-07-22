@@ -100,7 +100,7 @@ const IndiaMapComponent = ({ activeStateId, onStateHover, onStateClick, cardRef 
         </svg>
       </div>
 
-      <div className="relative z-10 w-full h-full scale-100 origin-center sm:scale-110 lg:scale-125 lg:-translate-x-8 xl:-translate-x-16">
+      <div className="relative z-10 w-full h-full scale-110 origin-center sm:scale-125 lg:scale-[1.35] lg:-translate-x-8 xl:-translate-x-16">
         <svg 
           ref={svgRef}
           viewBox="0 0 612 696" 
