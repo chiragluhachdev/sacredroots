@@ -1,16 +1,21 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import { temples } from "@/lib/data/temples";
 import { TempleCard } from "@/components/TempleCard";
 import { HeroContent } from "@/components/hero/HeroContent";
 import { HeroStats } from "@/components/hero/HeroStats";
 import { CategorySection } from "@/components/home/CategorySection";
 import { ExploreIndiaSection } from "@/components/home/ExploreIndiaSection";
+import { TempleOfTheWeekSection } from '@/components/home/TempleOfTheWeekSection';
+import { UpcomingFestivalsSection } from '@/components/home/UpcomingFestivalsSection';
+import connectToDatabase from '@/lib/db/connect';
+import SiteSettings from '@/lib/db/models/SiteSettings';
+import Temple from '@/lib/db/models/Temple';
 
-export default function Home() {
-  const featuredTemples = temples.slice(0, 3);
-
+export default async function Home() {
+  await connectToDatabase();
+  const settings = await SiteSettings.findOne().lean();
+  const featuredTemples = await Temple.find({ featured: true }).limit(4).lean();
 
   return (
     <div className="flex flex-col w-full">
@@ -18,12 +23,12 @@ export default function Home() {
       <section className="relative w-full min-h-[100svh] flex flex-col overflow-hidden">
         <div className="absolute inset-0 z-0">
           <Image
-            src="/thebgimg.png"
+            src={settings?.hero?.backgroundImageUrl || "/thebgimg.png"}
             alt="Majestic Indian temple gopuram glowing at sunset"
             fill
             className="object-cover object-[87.4%_15%] sm:object-[72%_1%] animate-kenburns"
             sizes="100vw"
-            preload
+            priority
           />
           {/* Gradients to ensure text readability on the left and bottom */}
           <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/45 to-transparent"></div>
@@ -32,7 +37,7 @@ export default function Home() {
 
         {/* Content — vertically centred, grows to fill available space */}
         <div className="relative z-10 flex-1 flex items-center">
-          <HeroContent />
+          <HeroContent title={settings?.hero?.title} subtitle={settings?.hero?.subtitle} />
         </div>
 
         {/* Stats Bar — sits in the normal flow at the bottom of the hero */}
@@ -40,46 +45,62 @@ export default function Home() {
       </section>
 
       {/* Featured Temples Section */}
-      <section className="pt-24 pb-12 md:pb-16 bg-background w-full">
-        <div className="mx-auto w-full max-w-[1400px] px-5 sm:px-8 md:px-12">
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
-            <div>
-              <h2 className="font-heading text-4xl md:text-5xl font-bold text-foreground">Featured Temples</h2>
-              <p className="mt-3 text-lg text-muted-foreground max-w-2xl">
-                Curated architectural marvels and highly revered shrines to begin your spiritual journey.
-              </p>
-            </div>
-            <Link href="/temples" className="inline-flex items-center text-primary font-medium hover:underline group whitespace-nowrap">
-              Explore All <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-            </Link>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {featuredTemples.map((temple) => (
-              <TempleCard key={temple.id} temple={temple} />
-            ))}
+      <section className="mx-auto w-full max-w-[1400px] px-5 sm:px-8 md:px-12 py-20 md:py-32">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+          <div>
+            <h2 className="font-serif text-3xl md:text-5xl text-[#0A1A14]">Featured Temples</h2>
+            <p className="text-[#A3B3AA] mt-4 text-lg">Discover the most iconic spiritual destinations.</p>
           </div>
         </div>
+        
+        {featuredTemples.length > 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {featuredTemples.map((temple: any) => (
+              <TempleCard key={temple._id.toString()} temple={{
+                id: temple._id.toString(),
+                name: temple.name,
+                state: temple.state,
+                district: temple.district,
+                city: temple.district, // using district as city
+                mainDeity: temple.deity,
+                otherDeities: [],
+                description: temple.overview,
+                overview: temple.overview,
+                history: temple.history,
+                architecture: temple.facts?.architecture || "",
+                importance: "",
+                festivals: [],
+                timings: temple.info?.timings || "",
+                entryFee: temple.info?.entryFee || "",
+                dressCode: temple.info?.dressCode || "",
+                photographyAllowed: true,
+                latitude: 0,
+                longitude: 0,
+                bestTimeToVisit: temple.info?.bestTime || "",
+                facilities: [],
+                nearbyPlaces: [],
+                coverImage: temple.heroImage,
+                gallery: temple.gallery || [],
+                category: temple.highlights?.[0] || "Temple",
+                slug: temple.slug
+              }} />
+            ))}
+          </div>
+        ) : (
+          <div className="p-8 text-center bg-white rounded-2xl border border-[#E8E1D3]">
+            <p className="text-gray-500">No temples found. Please add them via the Admin Panel.</p>
+          </div>
+        )}
       </section>
 
       <CategorySection />
 
       <ExploreIndiaSection />
 
-      {/* Inspiration Section */}
-      <section className="py-32 bg-background w-full relative overflow-hidden">
-        <div className="mx-auto w-full max-w-[1400px] px-5 sm:px-8 md:px-12 relative z-10 flex flex-col items-center text-center">
-          <h2 className="font-heading text-4xl md:text-5xl font-bold text-foreground max-w-3xl leading-tight">
-            "A temple is not merely a structure of stone, but a living embodiment of the divine."
-          </h2>
-          <p className="mt-8 text-xl text-muted-foreground max-w-2xl">
-            Join thousands of seekers in discovering the hidden stories, architectural genius, and spiritual essence of India.
-          </p>
-          <Link href="/temples" className="mt-12 px-8 py-4 bg-primary text-primary-foreground font-medium rounded-full hover:bg-primary/90 transition-colors shadow-lg">
-            Start Discovering
-          </Link>
-        </div>
-      </section>
+      <TempleOfTheWeekSection />
+
+      <UpcomingFestivalsSection />
+
     </div>
   );
 }

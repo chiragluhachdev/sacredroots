@@ -22,7 +22,12 @@ const lineReveal: Variants = {
   show: { y: "0%", transition: { duration: 0.9, ease } },
 };
 
-export function HeroContent() {
+interface HeroContentProps {
+  title?: string;
+  subtitle?: string;
+}
+
+export function HeroContent({ title, subtitle }: HeroContentProps) {
   return (
     <motion.div
       variants={container}
@@ -34,7 +39,7 @@ export function HeroContent() {
       <motion.div variants={fadeUp} className="flex items-center gap-3 sm:gap-4 mb-5 sm:mb-6">
         <div className="h-[2px] w-8 sm:w-10 bg-[#D4A24C]" />
         <span className="text-[#D4A24C] text-[10px] sm:text-[11px] font-bold tracking-[0.2em] uppercase">
-          Discover India&apos;s Spiritual Heritage
+          {subtitle || "Discover India's Spiritual Heritage"}
         </span>
       </motion.div>
 
@@ -42,11 +47,6 @@ export function HeroContent() {
       <h1 className="font-heading text-[2.25rem] leading-[1.12] sm:text-5xl lg:text-[4.25rem] font-bold tracking-tight text-white max-w-4xl">
         <span className="block overflow-hidden pb-[0.08em]">
           <motion.span variants={lineReveal} className="block">
-            Every Temple
-          </motion.span>
-        </span>
-        <span className="block overflow-hidden pb-[0.08em]">
-          <motion.span variants={lineReveal} className="block text-[#D4A24C]">
             Has a Story
           </motion.span>
         </span>
