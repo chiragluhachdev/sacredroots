@@ -24,10 +24,12 @@ const lineReveal: Variants = {
 
 interface HeroContentProps {
   title?: string;
+  titleHighlighted?: string;
   subtitle?: string;
+  description?: string;
 }
 
-export function HeroContent({ title, subtitle }: HeroContentProps) {
+export function HeroContent({ title, titleHighlighted, subtitle, description }: HeroContentProps) {
   return (
     <motion.div
       variants={container}
@@ -47,7 +49,12 @@ export function HeroContent({ title, subtitle }: HeroContentProps) {
       <h1 className="font-heading text-[2.25rem] leading-[1.12] sm:text-5xl lg:text-[4.25rem] font-bold tracking-tight text-white max-w-4xl">
         <span className="block overflow-hidden pb-[0.08em]">
           <motion.span variants={lineReveal} className="block">
-            Has a Story
+            {title || "Every Temple"}
+          </motion.span>
+        </span>
+        <span className="block overflow-hidden pb-[0.08em]">
+          <motion.span variants={lineReveal} className="block text-[#D4A24C]">
+            {titleHighlighted || "Has a Story."}
           </motion.span>
         </span>
       </h1>
@@ -57,8 +64,7 @@ export function HeroContent({ title, subtitle }: HeroContentProps) {
         variants={fadeUp}
         className="mt-4 sm:mt-5 text-sm sm:text-base lg:text-lg text-white/95 max-w-xl font-light leading-relaxed"
       >
-        Explore the most profound, ancient, and majestic temples across India. A digital
-        encyclopedia of timeless devotion and architectural brilliance.
+        {description || "Explore the most profound, ancient, and majestic temples across India. A digital encyclopedia of timeless devotion and architectural brilliance."}
       </motion.p>
 
       {/* Search */}

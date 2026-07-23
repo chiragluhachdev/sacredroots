@@ -1,16 +1,20 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import { updateSiteSettings } from '@/lib/actions/settings';
 
 export default function ClientForm({ initialData }: { initialData: any }) {
+  const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   
   const [formData, setFormData] = useState({
-    heroTitle: initialData?.hero?.title || "Discover India's Sacred Architecture",
-    heroSubtitle: initialData?.hero?.subtitle || "A premium directory of temples, heritage, and spirituality.",
+    heroTitle: initialData?.hero?.title || "Every Temple",
+    heroTitleHighlighted: initialData?.hero?.titleHighlighted || "Has a Story.",
+    heroSubtitle: initialData?.hero?.subtitle || "Discover India's Spiritual Heritage",
+    heroDescription: initialData?.hero?.description || "Explore the most profound, ancient, and majestic temples across India. A digital encyclopedia of timeless devotion and architectural brilliance.",
     heroBg: initialData?.hero?.backgroundImageUrl || "/thebgimg.png",
     mission: initialData?.footer?.mission || "Dedicated to preserving, documenting, and celebrating the profound spiritual heritage and architectural marvels of temples across India.",
     contactEmail: initialData?.footer?.contactEmail || "contact@sacredroots.in",
@@ -30,7 +34,9 @@ export default function ClientForm({ initialData }: { initialData: any }) {
     const dbPayload = {
       hero: {
         title: formData.heroTitle,
+        titleHighlighted: formData.heroTitleHighlighted,
         subtitle: formData.heroSubtitle,
+        description: formData.heroDescription,
         backgroundImageUrl: formData.heroBg,
       },
       footer: {
@@ -46,6 +52,7 @@ export default function ClientForm({ initialData }: { initialData: any }) {
     const res = await updateSiteSettings(dbPayload);
     if (res.success) {
       setSuccess('Site settings updated successfully and homepage revalidated.');
+      router.refresh();
     } else {
       setError(res.error || 'Update failed');
     }
@@ -70,12 +77,22 @@ export default function ClientForm({ initialData }: { initialData: any }) {
           <h2 className="text-xl font-bold text-gray-900 border-b pb-4">Hero Section (Homepage)</h2>
           
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Main Heading</label>
-            <input type="text" name="heroTitle" value={formData.heroTitle} onChange={handleChange} className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#0B4D3B]" />
+            <label className="block text-sm font-medium text-gray-700 mb-1">Eyebrow (Overline)</label>
+            <input type="text" name="heroSubtitle" value={formData.heroSubtitle} onChange={handleChange} className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#0B4D3B]" />
+          </div>
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Main Title (Line 1)</label>
+              <input type="text" name="heroTitle" value={formData.heroTitle} onChange={handleChange} className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#0B4D3B]" />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Highlighted Title (Line 2)</label>
+              <input type="text" name="heroTitleHighlighted" value={formData.heroTitleHighlighted} onChange={handleChange} className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#0B4D3B]" />
+            </div>
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Subheading</label>
-            <input type="text" name="heroSubtitle" value={formData.heroSubtitle} onChange={handleChange} className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#0B4D3B]" />
+            <label className="block text-sm font-medium text-gray-700 mb-1">Description</label>
+            <textarea name="heroDescription" value={formData.heroDescription} onChange={handleChange} rows={3} className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#0B4D3B]"></textarea>
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">Background Image URL</label>

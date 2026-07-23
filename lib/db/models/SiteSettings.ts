@@ -3,7 +3,9 @@ import mongoose, { Schema, Document } from 'mongoose';
 export interface ISiteSettings extends Document {
   hero: {
     title: string;
+    titleHighlighted: string;
     subtitle: string;
+    description: string;
     backgroundImageUrl: string;
   };
   footer: {
@@ -19,8 +21,10 @@ export interface ISiteSettings extends Document {
 
 const SiteSettingsSchema: Schema = new Schema({
   hero: {
-    title: { type: String, default: "Discover India's Sacred Architecture" },
-    subtitle: { type: String, default: "A premium directory of temples, heritage, and spirituality." },
+    title: { type: String, default: "Every Temple" },
+    titleHighlighted: { type: String, default: "Has a Story." },
+    subtitle: { type: String, default: "Discover India's Spiritual Heritage" },
+    description: { type: String, default: "Explore the most profound, ancient, and majestic temples across India. A digital encyclopedia of timeless devotion and architectural brilliance." },
     backgroundImageUrl: { type: String, default: "/thebgimg.png" },
   },
   footer: {

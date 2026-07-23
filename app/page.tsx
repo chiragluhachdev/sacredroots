@@ -37,7 +37,12 @@ export default async function Home() {
 
         {/* Content — vertically centred, grows to fill available space */}
         <div className="relative z-10 flex-1 flex items-center">
-          <HeroContent title={settings?.hero?.title} subtitle={settings?.hero?.subtitle} />
+          <HeroContent 
+            title={settings?.hero?.title} 
+            titleHighlighted={settings?.hero?.titleHighlighted}
+            subtitle={settings?.hero?.subtitle} 
+            description={settings?.hero?.description}
+          />
         </div>
 
         {/* Stats Bar — sits in the normal flow at the bottom of the hero */}
